@@ -36,19 +36,19 @@ export default function SignUp(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
+        // const data = new FormData(event.currentTarget);
        
-        const result = await axios.get('https://localhost:44318/Login/Login',{email}).then(
-            res=>{
+        // const result = await axios.get('https://localhost:44318/Login/Login').then(
+        //     res=>{
 
-            }
-        )
+        //     }
+        // )
 
 
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        // console.log({
+        //     email: data.get('email'),
+        //     password: data.get('password'),
+        // });
     };
 
     return (
@@ -78,9 +78,8 @@ export default function SignUp(props) {
                                     required
                                     fullWidth
                                     id="username"
-                                    label="username"
+                                    label={props.username}
                                     variant="standard"
-
                                     autoFocus
                                 />
                             </Grid>
@@ -140,6 +139,18 @@ export default function SignUp(props) {
                                     type="Height"
                                     id="Height"
                                     autoComplete="new-height"                                   
+                                    
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="dateOfRegistration"
+                                    label="dateOfRegistration"
+                                    type="date"
+                                    id="dateOfRegistration"
+                                    autoComplete="new-dateOfRegistration"                                   
                                     
                                 />
                             </Grid>
