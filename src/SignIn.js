@@ -41,23 +41,27 @@ export default function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        await login(data.get('email'), data.get('password'));
+        await login(data.get('email'), data.get('username'));
         //  navigate("/Subscribe")
     };
-    const login = async (email, password) => {
+    const login = async (email, username) => {
         try {
-            alert(email)
-            console.log(password)
-            const result = await axios.get(`https://localhost:44318/Login/Login?email=${email}&pass=${password}`).then((res) => {
+            
+            const result = await axios.get(`https://localhost:44318/Login/Login?email=${email}&username=${username}`).then((res) => {
                 if (res === 1)
-                    console.log("home page");
+                    navigate("/HomePage");
+
                 else
-                    navigate("/Subscribe");
+                    if (res === 0)
+                        navigate("/Subscribe",{state:{username:username,email:email}});
+                    else
+                        navigate("/Subscribe",{state:{username:username,email:email}});
 
                 console.log(res)
             }).catch((err) => {
                 console.log(err);
-                navigate("/Subscribe");
+                navigate("/Subscribe",{state:{username:username,email:email}});
+
             })
             console.log(result.data);
         }
@@ -103,11 +107,11 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
+                            name="username"
+                            label="username"
+                            type="username"
+                            id="username"
+                            autoComplete="current-username"
                         // variant="standard"
                         />
 
