@@ -80,7 +80,7 @@ export default function SignUp(props) {
                                     id="username"
                                     label={props.username}
                                     variant="standard"
-                                    autoFocus
+                                  
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
