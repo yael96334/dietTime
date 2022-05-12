@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -15,9 +16,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { PropaneSharp } from '@mui/icons-material';
+import { useLocation, useNavigate } from 'react-router-dom'
+
 
 function Copyright(props) {
-    
+
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -33,23 +36,47 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp(props) {
+    const location = useLocation()
+    let navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const  handleSubmit = async(event) => {
         event.preventDefault();
-        // const data = new FormData(event.currentTarget);
-       
-        // const result = await axios.get('https://localhost:44318/Login/Login').then(
-        //     res=>{
+        const data = new FormData(event.currentTarget);
+        
+    //    await register(data.get('height'),data.get('username'),data.get('dateOfRegistration'),data.get('tz'),
+    //     data.get('email'),data.get('dOB'),data.get('gender'));
 
-        //     }
-        // )
-
-
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
     };
+    // const register = async (data) => {
+    //     try {
+
+    //         const result = await axios.get(`https://localhost:44318/Login/Register?height=${height}&username=${username}&
+    //         dateOfRegistration=${dateOfRegistration}&tz=${tz}&email=${email}&dOB=${dOB}&gender=${gender}`).then((res) => {
+    //             if (res === 1)
+    //                 navigate("/HomePage");
+
+    //             else
+    //                 if (res === 0)
+    //                     navigate("/Subscribe", { state: { username: username, email: email } });
+    //                 else
+    //                     navigate("/Subscribe", { state: { username: username, email: email } });
+
+    //             console.log(res)
+    //         }).catch((err) => {
+    //             console.log(err);
+    //             navigate("/Subscribe", { state: { username: username, email: email } });
+
+    //         })
+    //         console.log(result.data);
+    //     }
+    //     catch (err) {
+    //         console.log(err)
+
+
+    //     }
+    // }
+
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -78,9 +105,9 @@ export default function SignUp(props) {
                                     required
                                     fullWidth
                                     id="username"
-                                    label={props.username}
+                                    label={location.state.username}
                                     variant="standard"
-                                  
+                                    autoFocus
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -88,11 +115,11 @@ export default function SignUp(props) {
                                     required
                                     fullWidth
                                     id="DateOfBirth"
-                                    label="Date Of Birth"
-                                    name="Date Of Birth"
+                                    label="DOB"
+                                    name="         Date Of Birth"
                                     autoComplete="Date Of Birth"
                                     variant="standard"
-
+                                    type="date"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -103,6 +130,7 @@ export default function SignUp(props) {
                                     id="Weight"
                                     label="Weight"
                                     name="Weight"
+                                    // type="kg"
                                     autoComplete="Weight"
                                     variant="standard"
 
@@ -115,6 +143,7 @@ export default function SignUp(props) {
                                     id="Gender"
                                     label="Gender"
                                     name="Gender"
+                                    type="text"
                                     autoComplete="Gender"
                                     variant="standard"
 
@@ -125,7 +154,7 @@ export default function SignUp(props) {
                                     required
                                     fullWidth
                                     id="email"
-                                    label={props.email}
+                                    label={location.state.email}
                                     name="email"
                                     autoComplete="email"
                                 />
@@ -136,10 +165,10 @@ export default function SignUp(props) {
                                     fullWidth
                                     name="Height"
                                     label="Height"
-                                    type="Height"
+                                    type="number"
                                     id="Height"
-                                    autoComplete="new-height"                                   
-                                    
+                                    autoComplete="new-height"
+
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -150,8 +179,20 @@ export default function SignUp(props) {
                                     label="dateOfRegistration"
                                     type="date"
                                     id="dateOfRegistration"
-                                    autoComplete="new-dateOfRegistration"                                   
-                                    
+                                    autoComplete="new-dateOfRegistration"
+
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="tz"
+                                    label="tz"
+                                    type="text"
+                                    id="tz"
+                                    autoComplete="new-tz"
+
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -162,7 +203,7 @@ export default function SignUp(props) {
                             </Grid>
                         </Grid>
                         <Button
-                        
+
                             type="submit"
                             fullWidth
                             variant="contained"
