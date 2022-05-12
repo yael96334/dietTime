@@ -14,8 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import Subscribe from './Subscribe';
-import { Routes,Route,BrowserRouter } from 'react-router-dom';
-
+import { Routes, Route, BrowserRouter, useNavigate } from 'react-router-dom';
+import Router from './Router';
 
 
 function Copyright(props) {
@@ -28,7 +28,7 @@ function Copyright(props) {
             {new Date().getFullYear()}
             {'.'}
         </Typography>
-        
+
     );
 }
 
@@ -36,47 +36,40 @@ const theme = createTheme();
 
 
 export default function SignIn() {
+    let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         await login(data.get('email'), data.get('password'));
+        //  navigate("/Subscribe")
     };
     const login = async (email, password) => {
         try {
-            
-            const result = await axios.get('https://localhost:44318/Login/Login?email=${email}&pass=${password}'+ {
-                // // headers: {
-                // //     'Access-Control-Allow-Origin': '*',
-                // //     'Access-Control-Allow-Headers': '*',
-                // // }
-            }).then(res=>
-                {
-                    // if(res.data==-1)
-                     
+            alert(email)
+            console.log(password)
+            const result = await axios.get(`https://localhost:44318/Login/Login?email=${email}&pass=${password}`).then((res) => {
+                if (res === 1)
+                    console.log("home page");
+                else
+                    navigate("/Subscribe");
 
-                }
-            ) ;   
-            
-            
+                console.log(res)
+            }).catch((err) => {
+                console.log(err);
+                navigate("/Subscribe");
+            })
             console.log(result.data);
         }
         catch (err) {
             console.log(err)
+
+
         }
     }
     return (
-        
+
         <ThemeProvider theme={theme}>
-                <BrowserRouter>
-    <Link to="/Subscribe">Subscribe</Link>
-    {/* <br/>
-    <Link to="/Subscribe">Subscribe</Link> */}
-    <Routes>
-        <Route path="Subscribe" element={<Subscribe/>}/>
-        {/* <Route path="BookStatus" element={<BookStatus/>}/> */}
-    </Routes>
-    </BrowserRouter>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -102,7 +95,7 @@ export default function SignIn() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            variant="standard"
+                            // variant="standard"
                             autoFocus
                         />
                         {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
@@ -115,9 +108,9 @@ export default function SignIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            // variant="standard"
+                        // variant="standard"
                         />
-                        
+
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
