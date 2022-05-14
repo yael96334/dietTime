@@ -39,42 +39,49 @@ export default function SignUp(props) {
     const location = useLocation()
     let navigate = useNavigate();
 
-    const  handleSubmit = async(event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+
         const data = new FormData(event.currentTarget);
-        
-    //    await register(data.get('height'),data.get('username'),data.get('dateOfRegistration'),data.get('tz'),
-    //     data.get('email'),data.get('dOB'),data.get('gender'));
+        // console.log({
+        //     email: data.get('email'),
+        //     password: data.get('password'),
+        //   });
+        console.log({
+            height: data.get('Height'), username: data.get('username'), dateOfRegistration: data.get('dateOfRegistration'), tz: data.get('tz'),
+            email: data.get('email'), dOB: data.get('dOB'), gender: data.get('Gender'), weight: data.get('Weight')
+        });
 
     };
-    // const register = async (data) => {
-    //     try {
+    const register = async (height, username, dateOfRegistration, tz, email, dOB, gender, weight) => {
+        try {
+            const result = await axios.get(`https://localhost:44318/Login
+            /Register?height=${height}&username=${username}&
+            dateOfRegistration=${dateOfRegistration}&tz=${tz}
+            &email=${email}&dOB=${dOB}&gender=${gender}`).then((res) => {
+                if (res === 1)
+                    navigate("/HomePage");
 
-    //         const result = await axios.get(`https://localhost:44318/Login/Register?height=${height}&username=${username}&
-    //         dateOfRegistration=${dateOfRegistration}&tz=${tz}&email=${email}&dOB=${dOB}&gender=${gender}`).then((res) => {
-    //             if (res === 1)
-    //                 navigate("/HomePage");
+                else
+                    if (res === 0)
+                        navigate("/Subscribe", { state: { username: username, email: email } });
+                    else
+                        navigate("/Subscribe", { state: { username: username, email: email } });
 
-    //             else
-    //                 if (res === 0)
-    //                     navigate("/Subscribe", { state: { username: username, email: email } });
-    //                 else
-    //                     navigate("/Subscribe", { state: { username: username, email: email } });
+                console.log(res)
+            }).catch((err) => {
+                console.log(err);
+                navigate("/Subscribe", { state: { username: username, email: email } });
 
-    //             console.log(res)
-    //         }).catch((err) => {
-    //             console.log(err);
-    //             navigate("/Subscribe", { state: { username: username, email: email } });
-
-    //         })
-    //         console.log(result.data);
-    //     }
-    //     catch (err) {
-    //         console.log(err)
+            })
+            // console.log(result.data);
+        }
+        catch (err) {
+            console.log(err)
 
 
-    //     }
-    // }
+        }
+    }
 
 
 
@@ -105,21 +112,24 @@ export default function SignUp(props) {
                                     required
                                     fullWidth
                                     id="username"
-                                    label={location.state.username}
-                                    variant="standard"
+                                    // label={location.state.username}
+                                    label="username"
+                                    variant="filled"
                                     autoFocus
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+
+                                    autoComplete="Date Of Birth"
+                                    variant="filled"
                                     required
                                     fullWidth
-                                    id="DateOfBirth"
-                                    label="DOB"
-                                    name="         Date Of Birth"
-                                    autoComplete="Date Of Birth"
-                                    variant="standard"
+                                    name="dOB"
+                                    label="dateOfBirth"
                                     type="date"
+                                    id="dateOfBirth"
+                                // autoComplete="new-dateOfBirth"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -132,7 +142,7 @@ export default function SignUp(props) {
                                     name="Weight"
                                     // type="kg"
                                     autoComplete="Weight"
-                                    variant="standard"
+                                    variant="filled"
 
                                 />
                             </Grid>
@@ -143,9 +153,8 @@ export default function SignUp(props) {
                                     id="Gender"
                                     label="Gender"
                                     name="Gender"
-                                    type="text"
                                     autoComplete="Gender"
-                                    variant="standard"
+                                    variant="filled"
 
                                 />
                             </Grid>
@@ -154,21 +163,22 @@ export default function SignUp(props) {
                                     required
                                     fullWidth
                                     id="email"
-                                    label={location.state.email}
+                                    // label={location.state.email}
+                                    label="email"
                                     name="email"
                                     autoComplete="email"
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    required
-                                    fullWidth
-                                    name="Height"
-                                    label="Height"
-                                    type="number"
-                                    id="Height"
-                                    autoComplete="new-height"
-
+                                 required
+                                 fullWidth
+                                 id="Height"
+                                 label="Height"
+                                 name="Height"
+                                 type="number"
+                                 autoComplete="Height"
+                                 
                                 />
                             </Grid>
                             <Grid item xs={12}>

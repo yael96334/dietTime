@@ -41,6 +41,7 @@ export default function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        console.log(data)
         await login(data.get('email'), data.get('username'));
         //  navigate("/Subscribe")
     };
@@ -67,12 +68,9 @@ export default function SignIn() {
         }
         catch (err) {
             console.log(err)
-
-
         }
     }
     return (
-
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
