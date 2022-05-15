@@ -16,7 +16,8 @@ import axios from 'axios';
 import Subscribe from './Subscribe';
 import { Routes, Route, BrowserRouter, useNavigate } from 'react-router-dom';
 import Router from './Router';
-
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 function Copyright(props) {
     return (
@@ -36,6 +37,32 @@ const theme = createTheme();
 
 
 export default function SignIn() {
+    const formik = useFormik({
+        initialValues: {
+    
+            email: '',
+            username: '',
+            
+        },
+        validationSchema: Yup.object({
+           
+            email: Yup
+                .string()
+                .email(
+                    'Must be a valid email')
+                .max(255)
+                .required(
+                    'Email is required'),
+            username: Yup
+                .string()
+                .max(20)
+                .required(
+                    'username is required'),
+        }),
+        onSubmit: () => {
+            // router.push('/');
+        }
+    });
     let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -88,29 +115,43 @@ export default function SignIn() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            // variant="standard"
-                            autoFocus
-                        />
+                    <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
+                        
                         {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
                         <TextField
-                            margin="normal"
+                            autoComplete="username"
+                            // variant="filled"
                             required
                             fullWidth
                             name="username"
                             label="username"
                             type="username"
                             id="username"
-                            autoComplete="current-username"
+                            error={Boolean(formik.touched.username && formik.errors.username)}
+                            helperText={formik.touched.username && formik.errors.username}
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
+
                         // variant="standard"
+                        />
+                        <TextField
+                              required
+                              fullWidth
+                              id="email"
+                              // label={location.state.email}
+                              label="email"
+                              name="email"
+                              autoComplete="email"
+                              error={Boolean(formik.touched.email && formik.errors.email)}
+                              helperText={formik.touched.email && formik.errors.email}
+                              onBlur={formik.handleBlur}
+                              onChange={formik.handleChange}
+                              value={formik.values.email}
+
+                              type="email"
+                              margin="normal"
+                            
                         />
 
                         <FormControlLabel
@@ -118,6 +159,8 @@ export default function SignIn() {
                             label="Remember me"
                         />
                         <Button
+                            disabled={formik.isSubmitting}
+
                             type="submit"
                             fullWidth
                             variant="contained"
