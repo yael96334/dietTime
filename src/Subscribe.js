@@ -40,7 +40,6 @@ const theme = createTheme();
 export default function SignUp(props) {
     const formik = useFormik({
         initialValues: {
-
             email: '',
             username: '',
             dateOfRegistration: '',
@@ -51,81 +50,96 @@ export default function SignUp(props) {
             Height: '',
             policy: false
         },
-        validationSchema: Yup.object({
-            dOB: Yup
-                .date()
-                .max(255)
-                .required(
-                    'dOB  is required'),
-            Gender: Yup
-                .string()
-                .max(255)
-                .required(
-                    'Gender name is required'),
+        // validationSchema: Yup.object({
+        //     dOB: Yup
+        //         .date()
+        //         // .max(255)
+        //         .required(
+        //             'dOB  is required'),
+        //     Gender: Yup
+        //         .string()
+        //         .max(255)
+        //         .required(
+        //             'Gender name is required'),
 
-            tz: Yup
-                .string()
-                .max(9)
-                .min(9)
-                .required(
-                    'tz  is required'),
-            email: Yup
-                .string()
-                .email(
-                    'Must be a valid email')
-                .max(255)
-                .required(
-                    'Email is required'),
-            username: Yup
-                .string()
-                .max(20)
-                .required(
-                    'username is required'),
-            Height: Yup
-                .number()
-                .max(255)
-                .required(
-                    'height is required'),
-            Weight: Yup
-                .number()
-                .max(255)
-                .required(
-                    'height is required'),
-            dateOfRegistration: Yup
-                .date()
-                .max(255)
-                .required(
-                    'dateOfRegistration is required'),
+        //     tz: Yup
+        //         .string()
+        //         .max(9)
+        //         .min(9)
+        //         .required(
+        //             'tz  is required'),
+        //     email: Yup
+        //         .string()
+        //         .email(
+        //             'Must be a valid email')
+        //         .max(255)
+        //         .required(
+        //             'Email is required'),
+        //     username: Yup
+        //         .string()
+        //         .max(20)
+        //         .required(
+        //             'username is required'),
+        //     Height: Yup
+        //         .number()
+        //         .max(255)
+        //         .required(
+        //             'height is required'),
+        //     Weight: Yup
+        //         .number()
+        //         .max(255)
+        //         .required(
+        //             'height is required'),
+        //     dateOfRegistration: Yup
+        //         .date()
+        //         // .max(255)
+        //         .required(
+        //             'dateOfRegistration is required'),
 
 
-        }),
-        onSubmit: () => {
-            // router.push('/');
+        // }),
+        onSubmit: (values) => {
+            handleSubmit(values)
         }
     });
     const location = useLocation()
     let navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        //   });
+    const handleSubmit = async (values) => {
+        const {
+            email,
+            username,
+            dateOfRegistration,
+            tz,
+            dOB,
+            Gender,
+            Weight,
+            Height,
+            policy
+        } = values;
         console.log({
-            height: data.get('Height'), username: data.get('username'), dateOfRegistration: data.get('dateOfRegistration'), tz: data.get('tz'),
-            email: data.get('email'), dOB: data.get('dOB'), gender: data.get('Gender'), weight: data.get('Weight')
+            height: Height, username:username, dateOfRegistration:dateOfRegistration, tz:tz,
+            email:email, dOB:dOB, gender:Gender, weight:Weight
         });
+        register(values);
 
     };
-    const register = async (height, username, dateOfRegistration, tz, email, dOB, gender, weight) => {
+    const register = (user) => {
+        const {
+            email,
+            username,
+            dateOfRegistration,
+            tz,
+            dOB,
+            Gender,
+            Weight,
+            Height,
+            policy
+        } = user;
         try {
-            const result = await axios.get(`https://localhost:44318/Login
-            /Register?height=${height}&username=${username}&
-            dateOfRegistration=${dateOfRegistration}&tz=${tz}
-            &email=${email}&dOB=${dOB}&gender=${gender}`).then((res) => {
+            // https://localhost:44318/Login/Login?email=${email}&username=${username}
+            axios.post(`https://localhost:44318/api/Login/POST`,{username,email})
+            .then((res) => {
                 if (res === 1)
                     navigate("/HomePage");
 
@@ -175,41 +189,41 @@ export default function SignUp(props) {
                             <Grid item xs={12} sm={6}>
 
                                 <TextField
-                                   
 
-                                // label={location.state.username}
-                                autoComplete="username"
-                                variant="filled"
-                                required
-                                fullWidth
-                                name="username"
-                                label="username"
-                                type="username"
-                                id="username"
-                                error={Boolean(formik.touched.username && formik.errors.username)}
-                                helperText={formik.touched.username && formik.errors.username}
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                value={formik.values.username}
+
+                                    // label={location.state.username}
+                                    autoComplete="username"
+                                    variant="filled"
+                                    required
+                                    fullWidth
+                                    name="username"
+                                    label="username"
+                                    type="username"
+                                    id="username"
+                                    error={Boolean(formik.touched.username && formik.errors.username)}
+                                    helperText={formik.touched.username && formik.errors.username}
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.username}
 
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
 
-                                   variant="filled" 
-                                required
-                                fullWidth
-                                id="Height"
-                                label="Height"
-                                name="Height"
-                                type="number"
-                                autoComplete="Height"
-                                error={Boolean(formik.touched.Height && formik.errors.Height)}
-                                helperText={formik.touched.Height && formik.errors.Height}
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                value={formik.values.Height}
+                                    variant="filled"
+                                    required
+                                    fullWidth
+                                    id="Height"
+                                    label="Height"
+                                    name="Height"
+                                    type="number"
+                                    autoComplete="Height"
+                                    error={Boolean(formik.touched.Height && formik.errors.Height)}
+                                    helperText={formik.touched.Height && formik.errors.Height}
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.Height}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -268,20 +282,20 @@ export default function SignUp(props) {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                   autoComplete="Date Of Birth"
-                                   variant="outlined"
-                                   required
-                                   fullWidth
-                                   name="dOB"
-                                   label="dateOfBirth"
-                                   type="date"
-                                   id="dateOfBirth"
-                                   error={Boolean(formik.touched.dOB && formik.errors.dOB)}
-                                   helperText={formik.touched.dOB && formik.errors.dOB}
-                                   onBlur={formik.handleBlur}
-                                   onChange={formik.handleChange}
-                                   value={formik.values.dOB}
-                               // autoComplete="new-dateOfBirth"
+                                    autoComplete="Date Of Birth"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="dOB"
+                                    label="dateOfBirth"
+                                    type="date"
+                                    id="dateOfBirth"
+                                    error={Boolean(formik.touched.dOB && formik.errors.dOB)}
+                                    helperText={formik.touched.dOB && formik.errors.dOB}
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.dOB}
+                                // autoComplete="new-dateOfBirth"
                                 />
                             </Grid>
                             <Grid item xs={12}>
