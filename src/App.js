@@ -6,13 +6,15 @@ import SignIn from './SignIn';
 import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 // import HomePage from './HomePage';
-
+// import Display from './DisplayPdf'
+import UpLoad from './UpLoad';
 function App() {
   // const [currentComponenet,setCurrentComponenet]=useState('login')
   return (
     <div className="App">
-     
-        <Router/>
+      {/* <UpLoad/> */}
+     {/* <Display/>  */}
+         <Router/> 
         {/* < SignIn /> */}
    
     </div>
