@@ -59,23 +59,32 @@ export default function SignIn() {
                 .required(
                     'username is required'),
         }),
-        onSubmit: () => {
-            // router.push('/');
+        onSubmit:(event) => {
+
+            // handleSubmit(event);
         }
     });
     let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+          event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data)
+       console.log({
+           email:data.get('email'),
+            username:data.get('username')
+       })
         await login(data.get('email'), data.get('username'));
         //  navigate("/Subscribe")
     };
     const login = async (email, username) => {
         try {
             
-            const result = await axios.get(`https://localhost:44318/Login/Login?email=${email}&username=${username}`).then((res) => {
+            const result = await axios.get(`https://localhost:44318/Login`,{
+                params:{
+                    email:email,
+                    username:username
+                }
+            }).then((res) => {
                 if (res === 1)
                     navigate("/HomePage");
 
@@ -115,7 +124,7 @@ export default function SignIn() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={formik.handleSubmit}  onSubmit={handleSubmit}  noValidate sx={{ mt: 1 }}>
                         
                         {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
                         <TextField
