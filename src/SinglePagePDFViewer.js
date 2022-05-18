@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Document,Page } from "react-pdf";
+import React, { useEffect, useState } from "react";
+import Button from '@mui/material/Button';
+
+import { Document, Page, pdfjs } from "react-pdf";
 export default function SinglePage(props) {
-    debugger;
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1); //setting 1 to show fisrt page
 
@@ -23,11 +24,16 @@ export default function SinglePage(props) {
   }
 
   const { pdf } = props;
+  useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
+  }, []);
+
 
   return (
     <>
       <Document
         file={pdf}
+        options={{ workerSrc: "/pdf.worker.js" }}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page pageNumber={pageNumber} />
@@ -46,7 +52,19 @@ export default function SinglePage(props) {
         >
           Next
         </button>
+        <Button
+          disabled={pageNumber >= numPages}
+          onClick={nextPage}
+          name="yjtf"
+          // type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          ygguygiuy
+        />
       </div>
     </>
   );
 }
+
+;
