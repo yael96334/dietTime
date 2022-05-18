@@ -11,8 +11,7 @@ return(
     <Routes>
         <Route path="/Subscribe" element={<Subscribe/>}/>
         <Route path="/SignIn" element={<SignIn/>}/>
-        <Route path="/Reg" element={<Reg/>}/>
-        <Route path="/Card" element={<Card/>}/>
+       
 
         <Route path="/" element={<Subscribe/>}/>
 
