@@ -5,17 +5,25 @@ import Router from './Router';
 import SignIn from './SignIn';
 import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import './css/bootstrap.min.css';
 // import HomePage from './HomePage';
 // import Display from './DisplayPdf'
 import UpLoad from './UpLoad';
+// import './css/bootstrap.min.css';
+// import { CreditCard } from '@mui/icons-material';
+import SinglePage from './SinglePagePDFViewer';
+import CreditCard from './CreditCard';
+import About from './About';
 function App() {
-  // const [currentComponenet,setCurrentComponenet]=useState('login')
   return (
     <div className="App">
       {/* <UpLoad/> */}
      {/* <Display/>  */}
-         <Router/> 
+     {/* <CreditCard/> */}
+     <About/>
+         {/* <Router/>  */}
         {/* < SignIn /> */}
+        
    
     </div>
   );
