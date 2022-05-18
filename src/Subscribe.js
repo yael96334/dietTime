@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
+import axios from 'axios'; 
 import { PropaneSharp } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -50,54 +50,54 @@ export default function SignUp(props) {
             Height: '',
             policy: false
         },
-        // validationSchema: Yup.object({
-        //     dOB: Yup
-        //         .date()
-        //         // .max(255)
-        //         .required(
-        //             'dOB  is required'),
-        //     Gender: Yup
-        //         .string()
-        //         .max(255)
-        //         .required(
-        //             'Gender name is required'),
+        validationSchema: Yup.object({
+            dOB: Yup
+                .date()
+                // .max(255)
+                .required(
+                    'dOB  is required'),
+            Gender: Yup
+                .string()
+                .max(255)
+                .required(
+                    'Gender name is required'),
 
-        //     tz: Yup
-        //         .string()
-        //         .max(9)
-        //         .min(9)
-        //         .required(
-        //             'tz  is required'),
-        //     email: Yup
-        //         .string()
-        //         .email(
-        //             'Must be a valid email')
-        //         .max(255)
-        //         .required(
-        //             'Email is required'),
-        //     username: Yup
-        //         .string()
-        //         .max(20)
-        //         .required(
-        //             'username is required'),
-        //     Height: Yup
-        //         .number()
-        //         .max(255)
-        //         .required(
-        //             'height is required'),
-        //     Weight: Yup
-        //         .number()
-        //         .max(255)
-        //         .required(
-        //             'height is required'),
-        //     dateOfRegistration: Yup
-        //         .date()
-        //         // .max(255)
-        //         .required(
-        //             'dateOfRegistration is required'),
+            tz: Yup
+                .string()
+                .max(9)
+                .min(9)
+                .required(
+                    'tz  is required'),
+            email: Yup
+                .string()
+                .email(
+                    'Must be a valid email')
+                .max(255)
+                .required(
+                    'Email is required'),
+            username: Yup
+                .string()
+                .max(20)
+                .required(
+                    'username is required'),
+            Height: Yup
+                .number()
+                .max(255)
+                .required(
+                    'height is required'),
+            Weight: Yup
+                .number()
+                .max(255)
+                .required(
+                    'height is required'),
+            dateOfRegistration: Yup
+                .date()
+                // .max(255)
+                .required(
+                    'dateOfRegistration is required'),
 
 
-        // }),
+        }),
         onSubmit: (values) => {
             handleSubmit(values)
         }
